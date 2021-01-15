@@ -1,5 +1,9 @@
 import React, { useEffect, useState } from "react";
+import { Link, Route, Switch } from "react-router-dom";
 import { getMovieDetails } from "../../../services/getData";
+import Cast from "./cast/Cast";
+import Reviews from "./reviews/Reviews";
+import { DetailsPage } from "./styleMoviesDetailsPage";
 
 const MovieDetailsPage = ({ match, history }) => {
   const [details, setDetails] = useState([]);
@@ -15,12 +19,13 @@ const MovieDetailsPage = ({ match, history }) => {
   };
 
   return (
-    <div>
+    <DetailsPage>
       <button type="button" onClick={hendleGoBeak}>
         Go beak
       </button>
       <div>
         <img
+          className="movieImg"
           src={`https://image.tmdb.org/t/p/w500/${details.poster_path}`}
           alt={details.original_title}
         />
@@ -37,7 +42,19 @@ const MovieDetailsPage = ({ match, history }) => {
             details.genres.map((item) => <li key={item.id}>{item.name}</li>)}
         </ul>
       </div>
-    </div>
+      <ul>
+        <li>
+          <Link to={`${match.url}/cast`}>Cast</Link>
+        </li>
+        <li>
+          <Link to={`${match.url}/reviews`}>Reviews</Link>
+        </li>
+      </ul>
+      <Switch>
+        <Route path={`${match.path}/cast`} component={Cast} />
+        <Route path={`${match.path}/reviews`} component={Reviews} />
+      </Switch>
+    </DetailsPage>
   );
 };
 
