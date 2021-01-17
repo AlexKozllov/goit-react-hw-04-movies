@@ -1,9 +1,8 @@
 import React, { useEffect, useState } from "react";
-import { getMovieCredits } from "../../../../services/getData";
+import { getMovieCredits } from "../../services/getData";
 import { CastItems } from "./styleCast";
 
 const Cast = ({ match }) => {
-  // console.log("props", props);
   const [casts, setCasts] = useState([]);
   useEffect(() => {
     getMovieCredits(match.params.moviesId).then((data) => setCasts([...data]));

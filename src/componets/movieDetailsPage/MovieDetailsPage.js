@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { Link, Route, Switch } from "react-router-dom";
-import { getMovieDetails } from "../../../services/getData";
-import Cast from "./cast/Cast";
-import Reviews from "./reviews/Reviews";
+import { getMovieDetails } from "../../services/getData";
+import Cast from "../cast/Cast";
+import Reviews from "../reviews/Reviews";
 import { DetailsPage } from "./styleMoviesDetailsPage";
+import routes from "../routes/routes";
 
-const MovieDetailsPage = ({ match, history }) => {
+const MovieDetailsPage = ({ match, history, location }) => {
   const [details, setDetails] = useState([]);
 
   useEffect(() => {
@@ -15,7 +16,9 @@ const MovieDetailsPage = ({ match, history }) => {
   }, []);
 
   const hendleGoBeak = () => {
-    history.push("/");
+    const { state } = location;
+    state && state.from && history.push(state.from);
+    !state && history.push(routes.movies);
   };
 
   return (

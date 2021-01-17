@@ -1,21 +1,22 @@
 import { Route, Switch } from "react-router-dom";
 import "./App.css";
 import Home from "./home/Home";
-import MovieDetailsPage from "./movievs/movieDetailsPage/MovieDetailsPage";
+import Layout from "./Layout";
+import MovieDetailsPage from "./movieDetailsPage/MovieDetailsPage";
 import Movievs from "./movievs/Movievs";
-import Navigation from "./navigation/Navigation";
+import routes from "./routes/routes";
 
 function App() {
   return (
-    <div className="App">
-      <Navigation />
-      <hr />
-      <Switch>
-        <Route path="/" exact component={Home} />
-        <Route path="/movies" exact component={Movievs} />
-        <Route path="/movies/:moviesId" component={MovieDetailsPage} />
-      </Switch>
-    </div>
+    <Layout>
+      <div className="App">
+        <Switch>
+          <Route path={routes.home} exact component={Home} />
+          <Route path={routes.movies} exact component={Movievs} />
+          <Route path={routes.moviesDetails} component={MovieDetailsPage} />
+        </Switch>
+      </div>
+    </Layout>
   );
 }
 

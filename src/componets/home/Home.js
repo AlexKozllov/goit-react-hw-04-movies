@@ -1,14 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import {
-  getMovieCredits,
-  getMovieDetails,
-  getTrending,
-  searchMovies,
-  getMovieReviews,
-} from "../../services/getData";
+import { getTrending } from "../../services/getData";
+import MoviesItem from "../moviesItem/MoviesItem";
 
-const Home = ({ match }) => {
+const Home = ({ match, location }) => {
   const [tranging, setTranging] = useState([]);
 
   useEffect(() => {
@@ -24,9 +19,7 @@ const Home = ({ match }) => {
       <ul>
         {tranging &&
           tranging.map((item) => (
-            <li key={item.id}>
-              <Link to={`movies/${item.id}`}>{item.original_title}</Link>
-            </li>
+            <MoviesItem key={item.id} itemData={item} location={location} />
           ))}
       </ul>
     </>

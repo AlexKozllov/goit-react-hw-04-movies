@@ -1,6 +1,7 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
 import { NavigationList } from "./styleNavigation";
+import routes from "../routes/routes";
 
 const Navigation = () => {
   return (
@@ -8,7 +9,7 @@ const Navigation = () => {
       <NavigationList>
         <li>
           <NavLink
-            to="/"
+            to={routes.home}
             className="navLink"
             activeClassName="aktiveNavLink"
             exact
@@ -18,7 +19,7 @@ const Navigation = () => {
         </li>
         <li>
           <NavLink
-            to="/movies"
+            to={routes.movies}
             className="navLink"
             activeClassName="aktiveNavLink"
           >
