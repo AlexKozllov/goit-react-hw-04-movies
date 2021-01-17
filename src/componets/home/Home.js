@@ -1,21 +1,24 @@
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import Loader from "react-loader-spinner";
 import { getTrending } from "../../services/getData";
 import MoviesItem from "../moviesItem/MoviesItem";
 
-const Home = ({ match, location }) => {
+const Home = ({ location }) => {
   const [tranging, setTranging] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
+    setIsLoading(true);
     getTrending()
       .then((data) => setTranging([...data]))
-      .catch((error) => console.log(error));
+      .catch((error) => console.log(error))
+      .finally(() => setIsLoading(false));
   }, []);
-  console.log("match", match);
 
   return (
     <>
       <h2>Home</h2>
+      {isLoading && <Loader />}
       <ul>
         {tranging &&
           tranging.map((item) => (

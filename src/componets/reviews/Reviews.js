@@ -9,7 +9,7 @@ const Reviews = ({ match }) => {
       setReviewsItems([...data])
     );
   }, []);
-  console.log("match", match);
+
   return (
     <ul>
       {reviewsItems.length !== 0 ? (

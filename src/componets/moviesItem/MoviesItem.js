@@ -2,7 +2,6 @@ import React from "react";
 import { Link } from "react-router-dom";
 
 const MoviesItem = ({ itemData, location }) => {
-  console.log("location", location);
   return (
     <li>
       <Link

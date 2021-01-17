@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import Loader from "react-loader-spinner";
 import { searchMovies } from "../../services/getData";
 import getQueryParams from "../../utils/getQueryParams";
 import MoviesItem from "../moviesItem/MoviesItem";
@@ -7,12 +8,16 @@ import SearchBox from "../searchBox/SearchBox";
 
 const Movievs = ({ history, location }) => {
   const [Movies, setMovies] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     const queryParams = getQueryParams(location.search);
-    console.log("queryParams", queryParams);
-    queryParams.query &&
-      searchMovies(queryParams.query).then((data) => setMovies(data));
+    if (queryParams.query) {
+      setIsLoading(true);
+      searchMovies(queryParams.query)
+        .then((data) => setMovies(data))
+        .finally(() => setIsLoading(false));
+    }
   }, [location.search]);
 
   const hendleChangeQuery = (query) => {
@@ -26,6 +31,7 @@ const Movievs = ({ history, location }) => {
     <div>
       <h2>Movievs</h2>
       <SearchBox onSubmit={hendleChangeQuery} />
+      {isLoading && <Loader />}
       <ul>
         {Movies &&
           Movies.map((item) => (

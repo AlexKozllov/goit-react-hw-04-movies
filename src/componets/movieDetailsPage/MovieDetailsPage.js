@@ -1,10 +1,9 @@
-import React, { useEffect, useState } from "react";
+import React, { lazy, Suspense, useEffect, useState } from "react";
 import { Link, Route, Switch } from "react-router-dom";
 import { getMovieDetails } from "../../services/getData";
-import Cast from "../cast/Cast";
-import Reviews from "../reviews/Reviews";
+import { mainRoutes } from "../routes/mainRoutes";
+
 import { DetailsPage } from "./styleMoviesDetailsPage";
-import routes from "../routes/routes";
 
 const MovieDetailsPage = ({ match, history, location }) => {
   const [details, setDetails] = useState([]);
@@ -18,7 +17,7 @@ const MovieDetailsPage = ({ match, history, location }) => {
   const hendleGoBeak = () => {
     const { state } = location;
     state && state.from && history.push(state.from);
-    !state && history.push(routes.movies);
+    !state && history.push(mainRoutes.movies);
   };
 
   return (
@@ -53,10 +52,18 @@ const MovieDetailsPage = ({ match, history, location }) => {
           <Link to={`${match.url}/reviews`}>Reviews</Link>
         </li>
       </ul>
-      <Switch>
-        <Route path={`${match.path}/cast`} component={Cast} />
-        <Route path={`${match.path}/reviews`} component={Reviews} />
-      </Switch>
+      <Suspense>
+        <Switch>
+          <Route
+            path={`${match.path}/cast`}
+            component={lazy(() => import("../cast/Cast"))}
+          />
+          <Route
+            path={`${match.path}/reviews`}
+            component={lazy(() => import("../reviews/Reviews.js"))}
+          />
+        </Switch>
+      </Suspense>
     </DetailsPage>
   );
 };

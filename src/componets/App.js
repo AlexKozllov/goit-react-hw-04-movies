@@ -1,20 +1,34 @@
+import { lazy, Suspense } from "react";
+import Loader from "react-loader-spinner";
 import { Route, Switch } from "react-router-dom";
 import "./App.css";
-import Home from "./home/Home";
 import Layout from "./Layout";
-import MovieDetailsPage from "./movieDetailsPage/MovieDetailsPage";
-import Movievs from "./movievs/Movievs";
-import routes from "./routes/routes";
+import { mainRoutes } from "./routes/mainRoutes";
 
 function App() {
   return (
     <Layout>
       <div className="App">
-        <Switch>
-          <Route path={routes.home} exact component={Home} />
-          <Route path={routes.movies} exact component={Movievs} />
-          <Route path={routes.moviesDetails} component={MovieDetailsPage} />
-        </Switch>
+        <Suspense fallback={<Loader />}>
+          <Switch>
+            <Route
+              path={mainRoutes.home}
+              exact
+              component={lazy(() => import("./home/Home"))}
+            />
+            <Route
+              path={mainRoutes.movies}
+              exact
+              component={lazy(() => import("./movievs/Movievs"))}
+            />
+            <Route
+              path={mainRoutes.moviesDetails}
+              component={lazy(() =>
+                import("./movieDetailsPage/MovieDetailsPage.js")
+              )}
+            />
+          </Switch>
+        </Suspense>
       </div>
     </Layout>
   );

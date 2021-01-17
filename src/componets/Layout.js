@@ -1,6 +1,5 @@
 import React from "react";
 import AppBar from "./appBar/AppBar";
-import Navigation from "./navigation/Navigation";
 
 const Layout = ({ children }) => {
   return (
