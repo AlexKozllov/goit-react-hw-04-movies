@@ -1,4 +1,5 @@
 import React, { lazy, Suspense, useEffect, useState } from "react";
+import Loader from "react-loader-spinner";
 import { Link, Route, Switch } from "react-router-dom";
 import { getMovieDetails } from "../../services/getData";
 import { mainRoutes } from "../routes/mainRoutes";
@@ -52,7 +53,7 @@ const MovieDetailsPage = ({ match, history, location }) => {
           <Link to={`${match.url}/reviews`}>Reviews</Link>
         </li>
       </ul>
-      <Suspense>
+      <Suspense fallback={<Loader />}>
         <Switch>
           <Route
             path={`${match.path}/cast`}
